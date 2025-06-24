@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha4 SDK - E-commerce Integration Example</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-primary': '#9333EA',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-4">
+                🛒 Alpha4 SDK - E-commerce Demo
+            </h1>
+            <p class="text-gray-300 text-lg">Earn blockchain points for shopping actions!</p>
+            <div id="points-display" class="mt-4 bg-purple-600/20 border border-purple-500/30 rounded-lg p-4 inline-block">
+                <span class="text-purple-300">Total Points Earned: </span>
+                <span id="total-points" class="text-2xl font-bold text-purple-400">0</span>
+            </div>
+        </header>
+
+        <!-- Product Grid -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">Featured Products</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Product 1 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-purple-500/25 transition-all duration-300">
+                    <div class="h-48 bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
+                        <span class="text-6xl">🎧</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Premium Headphones</h3>
+                        <p class="text-gray-400 mb-4">High-quality wireless headphones with noise cancellation</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-2xl font-bold text-purple-400">$299</span>
+                            <span class="bg-emerald-600/20 text-emerald-400 px-2 py-1 rounded text-sm">+100 points</span>
+                        </div>
+                        <button onclick="addToCart('headphones', 299)" class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg transition-colors duration-200">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-purple-500/25 transition-all duration-300">
+                    <div class="h-48 bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
+                        <span class="text-6xl">📱</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Smart Phone</h3>
+                        <p class="text-gray-400 mb-4">Latest flagship smartphone with advanced features</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-2xl font-bold text-emerald-400">$899</span>
+                            <span class="bg-emerald-600/20 text-emerald-400 px-2 py-1 rounded text-sm">+100 points</span>
+                        </div>
+                        <button onclick="addToCart('smartphone', 899)" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-lg transition-colors duration-200">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-purple-500/25 transition-all duration-300">
+                    <div class="h-48 bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                        <span class="text-6xl">💻</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Gaming Laptop</h3>
+                        <p class="text-gray-400 mb-4">High-performance laptop for gaming and productivity</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-2xl font-bold text-blue-400">$1,299</span>
+                            <span class="bg-emerald-600/20 text-emerald-400 px-2 py-1 rounded text-sm">+100 points</span>
+                        </div>
+                        <button onclick="addToCart('laptop', 1299)" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors duration-200">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shopping Cart -->
+        <section class="mb-12">
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                    <span>🛒</span>
+                    Shopping Cart
+                </h2>
+                <div id="cart-items" class="space-y-4 mb-6">
+                    <p class="text-gray-400">Your cart is empty</p>
+                </div>
+                <div class="border-t border-gray-700 pt-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xl font-semibold">Total:</span>
+                        <span id="cart-total" class="text-2xl font-bold text-purple-400">$0</span>
+                    </div>
+                    <button id="checkout-btn" onclick="checkout()" disabled class="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white py-3 px-6 rounded-lg transition-colors duration-200 font-semibold">
+                        Checkout & Earn Points! 🎉
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Signup -->
+        <section class="mb-12">
+            <div class="bg-gradient-to-r from-purple-600/20 to-blue-600/20 border border-purple-500/30 rounded-lg p-6">
+                <h2 class="text-2xl font-bold mb-4">📧 Subscribe for Exclusive Deals</h2>
+                <p class="text-gray-300 mb-6">Get 25 points for subscribing to our newsletter!</p>
+                <form class="newsletter-signup flex gap-4" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" placeholder="Enter your email" required class="flex-1 bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none">
+                    <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg transition-colors duration-200 whitespace-nowrap">
+                        Subscribe (+25 points)
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Social Sharing -->
+        <section class="mb-12">
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-2xl font-bold mb-4">📤 Share & Earn</h2>
+                <p class="text-gray-300 mb-6">Share our store with friends and earn 15 points per share!</p>
+                <div class="flex gap-4 flex-wrap">
+                    <button onclick="shareOnSocial('twitter')" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
+                        <span>🐦</span>
+                        Twitter (+15 points)
+                    </button>
+                    <button onclick="shareOnSocial('facebook')" class="bg-blue-700 hover:bg-blue-800 text-white px-6 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
+                        <span>📘</span>
+                        Facebook (+15 points)
+                    </button>
+                    <button onclick="shareOnSocial('linkedin')" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
+                        <span>💼</span>
+                        LinkedIn (+15 points)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Log -->
+        <section>
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-2xl font-bold mb-4">📊 Activity Log</h2>
+                <div id="activity-log" class="bg-gray-900 rounded-lg p-4 h-64 overflow-y-auto font-mono text-sm">
+                    <div class="text-gray-400">Activity will appear here...</div>
+                </div>
+                <button onclick="clearLog()" class="mt-4 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors duration-200">
+                    Clear Log
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Load Alpha4 SDK -->
+    <script src="../sui-points-adapter.js"></script>
+    
+    <script>
+        // Initialize Alpha4 SDK
+        const adapter = new SuiPointsAdapter({
+            packageId: '0x123456789abcdef',
+            partnerCapId: '0xabcdef123456789',
+            enableAutoDetection: true,
+            showNotifications: true,
+            enableDebugMode: true,
+            allowedOrigins: [window.location.origin],
+            eventMappings: {
+                user_signup: { points: 50, cooldown: 86400000 },
+                purchase_completed: { points: 100, cooldown: 0 },
+                newsletter_signup: { points: 25, cooldown: 604800000 },
+                social_share: { points: 15, cooldown: 3600000 },
+                profile_completed: { points: 75, cooldown: 86400000 },
+                referral_successful: { points: 200, cooldown: 0 }
+            }
+        });
+
+        // Shopping cart state
+        let cart = [];
+        let totalPoints = 0;
+
+        // Event logging
+        function logActivity(message) {
+            const log = document.getElementById('activity-log');
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = 'text-green-400 mb-1';
+            entry.textContent = `[${timestamp}] ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // Points tracking
+        function updatePoints(points) {
+            totalPoints += points;
+            document.getElementById('total-points').textContent = totalPoints;
+            logActivity(`🎉 Earned ${points} points! Total: ${totalPoints}`);
+        }
+
+        // Shopping cart functions
+        function addToCart(product, price) {
+            cart.push({ product, price });
+            updateCartDisplay();
+            logActivity(`🛒 Added ${product} to cart ($${price})`);
+        }
+
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-gray-400">Your cart is empty</p>';
+                cartTotal.textContent = '$0';
+                checkoutBtn.disabled = true;
+            } else {
+                const total = cart.reduce((sum, item) => sum + item.price, 0);
+                cartItems.innerHTML = cart.map(item => 
+                    `<div class="flex justify-between items-center bg-gray-700 rounded p-3">
+                        <span>${item.product}</span>
+                        <span class="font-semibold">$${item.price}</span>
+                    </div>`
+                ).join('');
+                cartTotal.textContent = `$${total}`;
+                checkoutBtn.disabled = false;
+            }
+        }
+
+        function checkout() {
+            if (cart.length === 0) return;
+            
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            logActivity(`💳 Processing checkout for $${total}...`);
+            
+            // Simulate checkout process
+            setTimeout(() => {
+                logActivity(`✅ Purchase completed! Order total: $${total}`);
+                updatePoints(100); // Purchase completion points
+                cart = [];
+                updateCartDisplay();
+            }, 1500);
+        }
+
+        // Newsletter subscription
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input').value;
+            logActivity(`📧 Newsletter subscription for ${email}`);
+            updatePoints(25);
+            event.target.reset();
+        }
+
+        // Social sharing
+        function shareOnSocial(platform) {
+            logActivity(`📤 Shared on ${platform}`);
+            updatePoints(15);
+            
+            // Simulate actual sharing (in real implementation, use proper share APIs)
+            const shareText = "Check out this amazing store with blockchain rewards!";
+            const shareUrl = window.location.href;
+            
+            switch(platform) {
+                case 'twitter':
+                    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`, '_blank');
+                    break;
+                case 'facebook':
+                    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank');
+                    break;
+                case 'linkedin':
+                    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank');
+                    break;
+            }
+        }
+
+        function clearLog() {
+            const log = document.getElementById('activity-log');
+            log.innerHTML = '<div class="text-gray-400">Activity will appear here...</div>';
+        }
+
+        // SDK event listeners
+        window.addEventListener('suiPointsReady', () => {
+            logActivity('🚀 Alpha4 SDK initialized and ready!');
+        });
+
+        window.addEventListener('suiPointsEarned', (event) => {
+            const { eventType, points } = event.detail;
+            logActivity(`🎯 SDK detected ${eventType} event (+${points} points)`);
+        });
+
+        // Initialize display
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartDisplay();
+            logActivity('🛒 E-commerce demo loaded');
+        });
+    </script>
+</body>
+</html> 

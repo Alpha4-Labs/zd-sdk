@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha4 SDK - SaaS Platform Integration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-primary': '#9333EA',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-4">
+                🚀 Alpha4 SDK - SaaS Demo
+            </h1>
+            <p class="text-gray-300 text-lg">Gamify your SaaS platform with blockchain rewards!</p>
+        </header>
+
+        <!-- User Status -->
+        <section class="mb-8">
+            <div class="bg-gray-800 rounded-lg p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-2xl font-bold">👤 User Dashboard</h2>
+                    <div class="flex items-center gap-4">
+                        <div class="bg-purple-600/20 border border-purple-500/30 rounded-lg px-4 py-2">
+                            <span class="text-purple-300">Reward Points: </span>
+                            <span id="user-points" class="text-xl font-bold text-purple-400">0</span>
+                        </div>
+                        <div class="bg-emerald-600/20 border border-emerald-500/30 rounded-lg px-4 py-2">
+                            <span class="text-emerald-300">Profile: </span>
+                            <span id="profile-status" class="text-emerald-400 font-semibold">Incomplete</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <div class="text-2xl mb-2">📊</div>
+                        <div class="text-sm text-gray-400">Account Created</div>
+                        <div class="text-lg font-semibold text-green-400">✅ Complete</div>
+                    </div>
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <div class="text-2xl mb-2">📧</div>
+                        <div class="text-sm text-gray-400">Email Verified</div>
+                        <div id="email-status" class="text-lg font-semibold text-yellow-400">⏳ Pending</div>
+                    </div>
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <div class="text-2xl mb-2">👥</div>
+                        <div class="text-sm text-gray-400">Team Invited</div>
+                        <div id="team-status" class="text-lg font-semibold text-gray-400">❌ Not Started</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Onboarding Steps -->
+        <section class="mb-8">
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-2xl font-bold mb-6">🎯 Complete Your Profile (75 points)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <form id="profile-form" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Full Name</label>
+                                <input type="text" id="fullname" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-purple-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Company</label>
+                                <input type="text" id="company" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-purple-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Role</label>
+                                <select id="role" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-purple-500 focus:outline-none">
+                                    <option value="">Select your role</option>
+                                    <option value="developer">Developer</option>
+                                    <option value="designer">Designer</option>
+                                    <option value="manager">Manager</option>
+                                    <option value="founder">Founder</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Team Size</label>
+                                <select id="teamsize" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-purple-500 focus:outline-none">
+                                    <option value="">Select team size</option>
+                                    <option value="1">Just me</option>
+                                    <option value="2-5">2-5 people</option>
+                                    <option value="6-10">6-10 people</option>
+                                    <option value="11-50">11-50 people</option>
+                                    <option value="50+">50+ people</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 px-6 rounded-lg transition-colors duration-200 font-semibold">
+                                Complete Profile (+75 points)
+                            </button>
+                        </form>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">🎁 Profile Completion Rewards</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3 p-3 bg-gray-700 rounded-lg">
+                                <span class="text-2xl">🎯</span>
+                                <div>
+                                    <div class="font-medium">Complete Profile</div>
+                                    <div class="text-sm text-gray-400">+75 points</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 bg-gray-700 rounded-lg">
+                                <span class="text-2xl">📧</span>
+                                <div>
+                                    <div class="font-medium">Verify Email</div>
+                                    <div class="text-sm text-gray-400">+25 points</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 bg-gray-700 rounded-lg">
+                                <span class="text-2xl">👥</span>
+                                <div>
+                                    <div class="font-medium">Invite Team Member</div>
+                                    <div class="text-sm text-gray-400">+200 points each</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Usage -->
+        <section class="mb-8">
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-2xl font-bold mb-6">🛠️ Try Our Features</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-gray-700 rounded-lg p-6 text-center">
+                        <div class="text-4xl mb-4">📊</div>
+                        <h3 class="text-lg font-semibold mb-2">Analytics Dashboard</h3>
+                        <p class="text-gray-400 mb-4">View detailed insights about your data</p>
+                        <button onclick="useFeature('analytics')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200">
+                            Open Dashboard
+                        </button>
+                    </div>
+                    <div class="bg-gray-700 rounded-lg p-6 text-center">
+                        <div class="text-4xl mb-4">🔧</div>
+                        <h3 class="text-lg font-semibold mb-2">API Integration</h3>
+                        <p class="text-gray-400 mb-4">Connect your apps with our API</p>
+                        <button onclick="useFeature('api')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg transition-colors duration-200">
+                            View API Docs
+                        </button>
+                    </div>
+                    <div class="bg-gray-700 rounded-lg p-6 text-center">
+                        <div class="text-4xl mb-4">👥</div>
+                        <h3 class="text-lg font-semibold mb-2">Team Collaboration</h3>
+                        <p class="text-gray-400 mb-4">Work together with your team</p>
+                        <button onclick="useFeature('collaboration')" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors duration-200">
+                            Invite Team
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social & Referral -->
+        <section class="mb-8">
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-2xl font-bold mb-6">📢 Spread the Word</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Share on Social Media (+15 points each)</h3>
+                        <div class="flex gap-3 flex-wrap">
+                            <button onclick="shareOnSocial('twitter')" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
+                                <span>🐦</span>
+                                Twitter
+                            </button>
+                            <button onclick="shareOnSocial('linkedin')" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
+                                <span>💼</span>
+                                LinkedIn
+                            </button>
+                            <button onclick="shareOnSocial('facebook')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
+                                <span>📘</span>
+                                Facebook
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Refer Friends (+200 points each)</h3>
+                        <div class="bg-gray-700 rounded-lg p-4">
+                            <div class="text-sm text-gray-400 mb-2">Your referral link:</div>
+                            <div class="flex gap-2">
+                                <input type="text" readonly value="https://ourapp.com/ref/USER123" class="flex-1 bg-gray-600 border border-gray-500 rounded px-3 py-2 text-white text-sm">
+                                <button onclick="copyReferralLink()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded transition-colors duration-200">
+                                    Copy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Activity Log -->
+        <section>
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h2 class="text-2xl font-bold mb-4">📊 Activity Log</h2>
+                <div id="activity-log" class="bg-gray-900 rounded-lg p-4 h-64 overflow-y-auto font-mono text-sm">
+                    <div class="text-gray-400">Activity will appear here...</div>
+                </div>
+                <button onclick="clearLog()" class="mt-4 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors duration-200">
+                    Clear Log
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Load Alpha4 SDK -->
+    <script src="../sui-points-adapter.js"></script>
+    
+    <script>
+        // Initialize Alpha4 SDK
+        const adapter = new SuiPointsAdapter({
+            packageId: '0x123456789abcdef',
+            partnerCapId: '0xabcdef123456789',
+            enableAutoDetection: true,
+            showNotifications: true,
+            enableDebugMode: true,
+            allowedOrigins: [window.location.origin]
+        });
+
+        // User state
+        let userPoints = 0;
+        let profileCompleted = false;
+        let emailVerified = false;
+        let teamInvited = false;
+
+        // Event logging
+        function logActivity(message) {
+            const log = document.getElementById('activity-log');
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = 'text-green-400 mb-1';
+            entry.textContent = `[${timestamp}] ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // Points management
+        function updatePoints(points) {
+            userPoints += points;
+            document.getElementById('user-points').textContent = userPoints;
+            logActivity(`🎉 Earned ${points} points! Total: ${userPoints}`);
+        }
+
+        function updateStatus() {
+            document.getElementById('email-status').innerHTML = emailVerified ? 
+                '<span class="text-green-400">✅ Verified</span>' : 
+                '<span class="text-yellow-400">⏳ Pending</span>';
+            
+            document.getElementById('team-status').innerHTML = teamInvited ? 
+                '<span class="text-green-400">✅ Invited</span>' : 
+                '<span class="text-gray-400">❌ Not Started</span>';
+            
+            document.getElementById('profile-status').innerHTML = profileCompleted ? 
+                '<span class="text-green-400">Complete</span>' : 
+                '<span class="text-yellow-400">Incomplete</span>';
+        }
+
+        // Profile completion
+        document.getElementById('profile-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!profileCompleted) {
+                profileCompleted = true;
+                updatePoints(75);
+                updateStatus();
+                logActivity('📝 Profile completed successfully!');
+                
+                // Simulate email verification after profile completion
+                setTimeout(() => {
+                    emailVerified = true;
+                    updatePoints(25);
+                    updateStatus();
+                    logActivity('📧 Email verified automatically!');
+                }, 2000);
+            } else {
+                logActivity('📝 Profile updated');
+            }
+        });
+
+        // Feature usage
+        function useFeature(feature) {
+            const features = {
+                analytics: '📊 Analytics Dashboard opened',
+                api: '🔧 API Documentation viewed',
+                collaboration: '👥 Team collaboration feature accessed'
+            };
+            
+            logActivity(features[feature] || `🛠️ Used ${feature} feature`);
+            
+            if (feature === 'collaboration' && !teamInvited) {
+                // Simulate team invitation
+                setTimeout(() => {
+                    teamInvited = true;
+                    updatePoints(200);
+                    updateStatus();
+                    logActivity('👥 Team member invited successfully!');
+                }, 1500);
+            }
+        }
+
+        // Social sharing
+        function shareOnSocial(platform) {
+            logActivity(`📤 Shared on ${platform}`);
+            updatePoints(15);
+            
+            const shareText = "Check out this amazing SaaS platform with blockchain rewards!";
+            const shareUrl = window.location.href;
+            
+            switch(platform) {
+                case 'twitter':
+                    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`, '_blank');
+                    break;
+                case 'facebook':
+                    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank');
+                    break;
+                case 'linkedin':
+                    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank');
+                    break;
+            }
+        }
+
+        // Referral link
+        function copyReferralLink() {
+            const referralLink = 'https://ourapp.com/ref/USER123';
+            navigator.clipboard.writeText(referralLink).then(() => {
+                logActivity('🔗 Referral link copied to clipboard');
+                // Simulate successful referral after some time
+                setTimeout(() => {
+                    updatePoints(200);
+                    logActivity('👥 Someone signed up using your referral link!');
+                }, 5000);
+            });
+        }
+
+        function clearLog() {
+            const log = document.getElementById('activity-log');
+            log.innerHTML = '<div class="text-gray-400">Activity will appear here...</div>';
+        }
+
+        // SDK event listeners
+        window.addEventListener('suiPointsReady', () => {
+            logActivity('🚀 Alpha4 SDK initialized and ready!');
+        });
+
+        window.addEventListener('suiPointsEarned', (event) => {
+            const { eventType, points } = event.detail;
+            logActivity(`🎯 SDK detected ${eventType} event (+${points} points)`);
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateStatus();
+            logActivity('🚀 SaaS platform demo loaded');
+            logActivity('💡 Complete your profile to start earning points!');
+        });
+    </script>
+</body>
+</html> 

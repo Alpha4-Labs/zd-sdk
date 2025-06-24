@@ -205,6 +205,13 @@ The SDK automatically detects events by analyzing:
 
 ## 🔧 Integration Examples
 
+Comprehensive integration examples are available in the `examples/` directory:
+
+- **`basic-integration.html`** - Complete integration showcase with all features
+- **`ecommerce-integration.html`** - E-commerce focused implementation with shopping cart
+- **`saas-integration.html`** - SaaS platform onboarding and user engagement
+- **`react-integration.html`** - React hooks and context integration example
+
 ### E-commerce Site
 ```html
 <!-- Automatic purchase detection -->
