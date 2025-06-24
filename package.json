@@ -1,0 +1,58 @@
+{
+  "name": "@alpha4/onboard-sdk",
+  "version": "1.0.0",
+  "description": "Universal Zero-Dev JavaScript SDK for blockchain points integration with automatic event detection",
+  "main": "sui-points-adapter.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "sui-points-adapter.js",
+    "sui-points-adapter.min.js",
+    "sui-points-adapter.min.js.map",
+    "types/",
+    "examples/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "npm run minify",
+    "minify": "terser sui-points-adapter.js -o sui-points-adapter.min.js --compress --mangle --source-map",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "http-server . -p 8080 -c-1",
+    "example": "npm run serve",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "alpha4",
+    "onboard",
+    "sui",
+    "blockchain",
+    "points",
+    "rewards",
+    "sdk",
+    "zero-dev",
+    "integration",
+    "web3",
+    "automatic",
+    "event-detection"
+  ],
+  "author": "Alpha4 Team <support@alpha4.io>",
+  "license": "MIT",
+  "homepage": "https://github.com/alpha4-ai/onboard-sdk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alpha4-ai/onboard-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alpha4-ai/onboard-sdk/issues"
+  },
+  "devDependencies": {
+    "terser": "^5.16.0",
+    "http-server": "^14.1.1"
+  },
+  "peerDependencies": {
+    "@mysten/sui": ">=0.50.0"
+  },
+  "cdn": "https://onboard.alpha4.io/sui-points-adapter.js",
+  "unpkg": "sui-points-adapter.js",
+  "jsdelivr": "sui-points-adapter.js"
+} 
