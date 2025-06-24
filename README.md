@@ -339,7 +339,7 @@ window.addEventListener('suiPointsEarned', (event) => {
 ```
 
 ### Self-Hosting
-Download from [GitHub Releases](https://github.com/alpha4-ai/onboard-sdk/releases) and host on your own CDN:
+Download from [GitHub Releases](https://github.com/Alpha4-Labs/zd-sdk/releases) and host on your own CDN:
 ```html
 <script src="/js/sui-points-adapter.js"></script>
 ```
@@ -362,7 +362,7 @@ A: Ensure `showNotifications: true` and check for CSS conflicts.
 - **Documentation**: https://docs.alpha4.io/onboard-sdk
 - **Support**: support@alpha4.io
 - **Discord**: https://discord.gg/alpha4
-- **GitHub**: https://github.com/alpha4-ai/onboard-sdk
+- **GitHub**: https://github.com/Alpha4-Labs/zd-sdk
 
 ## 📄 License
 

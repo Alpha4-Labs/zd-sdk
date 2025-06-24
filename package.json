@@ -37,13 +37,13 @@
   ],
   "author": "Alpha4 Team <support@alpha4.io>",
   "license": "MIT",
-  "homepage": "https://github.com/alpha4-ai/onboard-sdk",
+  "homepage": "https://github.com/Alpha4-Labs/zd-sdk",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alpha4-ai/onboard-sdk.git"
+    "url": "https://github.com/Alpha4-Labs/zd-sdk.git"
   },
   "bugs": {
-    "url": "https://github.com/alpha4-ai/onboard-sdk/issues"
+    "url": "https://github.com/Alpha4-Labs/zd-sdk/issues"
   },
   "devDependencies": {
     "terser": "^5.16.0",
